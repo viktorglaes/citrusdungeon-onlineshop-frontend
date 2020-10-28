@@ -1,32 +1,37 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <NavBar />
+    <!-- <router-link to="/">Home</router-link> |
+    <router-link to="/about">About</router-link> -->
+    <div class="views">
+      <Errors v-if="error" :msg="error" />
+      <router-view></router-view>
     </div>
-    <router-view />
+    <div><Footer /></div>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import NavBar from "./components/NavBar";
+import Errors from "./components/Errors";
+import { mapGetters } from "vuex";
+import Footer from "./components/Footer";
 
-#nav {
-  padding: 30px;
-}
+export default {
+  components: {
+    NavBar,
+    Errors,
+    Footer,
+  },
+  computed: {
+    ...mapGetters(["error"]),
+  },
+};
+</script>
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
+<style lang="scss">
+.app {
+  .views {
+  }
 }
 </style>
