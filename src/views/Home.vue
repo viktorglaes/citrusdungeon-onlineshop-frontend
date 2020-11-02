@@ -1,38 +1,51 @@
 <template>
   <div class="home">
-    <SearchButton />
+    <SearchField />
+
     <div class="items">
-      <div class="columns">
-        <div class="column">
-          <div id="laptop" class="img-gradient">
-            <div class="img-title">LAPTOPS</div>
-          </div>
-        </div>
-        <div class="column">
-          <div id="tv" class="img-gradient">
-            <div class="img-title">TVs</div>
-          </div>
-        </div>
-        <div class="column">
-          <div id="gaming" class="img-gradient">
-            <div class="img-title">CONSOLE & GAMING</div>
-          </div>
+      <div class="home-season">
+        <img
+          class="season-img"
+          src="https://cdn.pixabay.com/photo/2013/07/12/18/52/presents-153926_960_720.png"
+          alt=""
+          style="width: 1550px;"
+        />
+        <div class="season-title">
+          <p>MERRY CHRISTMAS</p>
+          <p class="subtitle">Celebrate the holiday with CiSHOP</p>
         </div>
       </div>
-      <div class="columns">
-        <div class="column">
-          <div id="pc" class="img-gradient">
-            <div class="img-title">PCs</div>
+      <div class="category-card">
+        <div class="columns is-multiline" @click="selectCategory($event)">
+          <div class="column is-one-third">
+            <div id="laptop" class="img-gradient">
+              <div class="img-title">LAPTOPS</div>
+            </div>
           </div>
-        </div>
-        <div class="column">
-          <div id="phone" class="img-gradient">
-            <div class="img-title">PHONES</div>
+          <div class="column is-one-third">
+            <div id="tv" class="img-gradient">
+              <div class="img-title">TVs</div>
+            </div>
           </div>
-        </div>
-        <div class="column">
-          <div id="camera" class="img-gradient">
-            <div class="img-title">CAMERAS</div>
+          <div class="column is-one-third">
+            <div id="gaming" class="img-gradient">
+              <div class="img-title">CONSOLE & GAMING</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div id="pc" class="img-gradient">
+              <div class="img-title">PCs</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div id="phone" class="img-gradient">
+              <div class="img-title">PHONES</div>
+            </div>
+          </div>
+          <div class="column is-one-third">
+            <div id="camera" class="img-gradient">
+              <div class="img-title">CAMERAS</div>
+            </div>
           </div>
         </div>
       </div>
@@ -42,114 +55,110 @@
 
 <script>
 // @ is an alias to /src
-import SearchButton from "../components/SearchButton";
+import SearchField from "../components/SearchField";
+import { mapActions } from "vuex";
 
 export default {
   name: "Home",
   components: {
-    SearchButton,
+    SearchField,
+  },
+  data() {
+    return {
+      searchParams: {
+        title: "",
+        categories: null,
+      },
+    };
+  },
+  methods: {
+    ...mapActions(["getProducts"]),
+    selectCategory(event) {
+      if (this.$route.name !== "Products") {
+        this.$router.push("/products");
+      }
+      let targetId = event.target.id;
+      this.searchParams.categories = [targetId];
+      this.getProducts(this.searchParams);
+    },
   },
 };
 </script>
 
 <style lang="scss">
 .home {
-  // .search-bar {
-  //   padding: 40px 200px 20px 200px;
-
-  //   input.input {
-  //     border-radius: 20px;
-  //   }
-  // }
-
-  // .sub-pages {
-  //   margin: 20px 0 0 20px;
-  //   .page-button {
-  //     margin: 0 10px 0 0;
-  //     left: 34%;
-  //   }
-  // background-color: #f2effb;
-  //   .sub-page {
-  //     padding: 20px 20px 20px 20px;
-  //   }
-  // }
-
   .items {
     // margin-top: 20px;
     text-align: center;
     padding: 20px;
 
-    .img-gradient {
-      height: 400px;
-      background-size: cover;
-      color: white;
-      padding: 20px;
-      transition: transform 0.25s ease;
+    .home-season {
       position: relative;
-      box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
-        0 4px 4px rgba(0, 0, 0, 0.11), 0 6px 8px rgba(0, 0, 0, 0.11),
-        0 8px 16px rgba(0, 0, 0, 0.11);
-
-      .img-title {
-        font-size: 32px;
+      display: inline-block;
+      .season-title {
+        text-align: left;
         position: absolute;
-        bottom: 10%;
-        left: 5%;
-        text-shadow: 1px 1px #2222228c;
+        left: 10rem;
+        color: white;
+        bottom: 5rem;
+        font-size: 30px;
+        font-weight: 600;
+
+        .subtitle {
+          font-size: 22px;
+          color: #9e9e9e;
+        }
       }
     }
+    .category-card {
+      padding: 50px 100px 20px 100px;
+      .img-gradient {
+        height: 400px;
+        background-size: cover;
+        color: white;
+        padding: 20px;
+        transition: transform 0.25s ease;
+        position: relative;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.11), 0 2px 2px rgba(0, 0, 0, 0.11),
+          0 4px 4px rgba(0, 0, 0, 0.11), 0 6px 8px rgba(0, 0, 0, 0.11),
+          0 8px 16px rgba(0, 0, 0, 0.11);
 
-    .img-gradient:hover {
-      transform: scale(0.98);
-    }
+        .img-title {
+          font-size: 32px;
+          position: absolute;
+          bottom: 10%;
+          left: 5%;
+          text-shadow: 1px 1px #2222228c;
+        }
+      }
 
-    #laptop {
-      background-image: linear-gradient(
-          to bottom,
-          rgba(245, 246, 252, 0.52),
-          rgba(117, 19, 93, 0.73)
-        ),
-        url("../assets/laptop.jpg");
-    }
-    #tv {
-      background-image: linear-gradient(
-          to bottom,
-          rgba(245, 246, 252, 0.52),
-          rgba(117, 19, 93, 0.73)
-        ),
-        url("../assets/tv.jpg");
-    }
-    #gaming {
-      background-image: linear-gradient(
-          to bottom,
-          rgba(245, 246, 252, 0.52),
-          rgba(117, 19, 93, 0.73)
-        ),
-        url("../assets/gaming.jpg");
-    }
-    #pc {
-      background-image: linear-gradient(
-          to bottom,
-          rgba(245, 246, 252, 0.52),
-          rgba(117, 19, 93, 0.73)
-        ),
-        url("../assets/pc.png");
-    }
-    #phone {
-      background-image: linear-gradient(
-          to bottom,
-          rgba(245, 246, 252, 0.52),
-          rgba(117, 19, 93, 0.73)
-        ),
-        url("../assets/phone.png");
-    }
-    #camera {
-      background-image: linear-gradient(
-          to bottom,
-          rgba(245, 246, 252, 0.52),
-          rgba(117, 19, 93, 0.73)
-        ),
-        url("../assets/camera.jpg");
+      .img-gradient:hover {
+        transform: scale(0.98);
+      }
+
+      #laptop {
+        background-image: url("../assets/laptop.jpg");
+        background-position: 30%;
+      }
+      #tv {
+        background-image: url("../assets/tv.jpg");
+        background-position: 30%;
+      }
+      #gaming {
+        background-image: url("../assets/gaming.jpg");
+      }
+      #pc {
+        background-image: url("../assets/pc.png");
+        background-position: 80%;
+      }
+      #phone {
+        background-image: url("../assets/phone.png");
+        background-position: 50%;
+      }
+      #camera {
+        background-image: url("../assets/camera.jpg");
+        background-position: 40%;
+      }
     }
   }
 }

@@ -27,14 +27,14 @@ const routes = [
       requiresGuest: true,
     },
   },
-  {
-    path: "/login",
-    name: "Login",
-    component: () => import("../views/Login.vue"),
-    meta: {
-      requiresGuest: true,
-    },
-  },
+  // {
+  //   path: "/login",
+  //   name: "Login",
+  //   component: () => import("../views/Login.vue"),
+  //   meta: {
+  //     requiresGuest: true,
+  //   },
+  // },
   {
     path: "/profile",
     name: "Profile",
@@ -60,7 +60,7 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {
       // Redirect to login page
-      next("/login");
+      next("/");
     } else {
       next();
     }

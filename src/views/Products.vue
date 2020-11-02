@@ -1,6 +1,6 @@
 <template>
   <div class="products">
-    <SearchButton />
+    <SearchField />
     <div class="search-results">
       <div class="header" style="border-bottom: solid 5px white">
         <p style="margin-left: 10px">{{ allProducts.length }} results</p>
@@ -35,12 +35,12 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import SearchButton from "../components/SearchButton";
+import SearchField from "../components/SearchField";
 
 export default {
   name: "Products",
   components: {
-    SearchButton,
+    SearchField,
   },
   computed: {
     ...mapGetters(["allProducts"]),
@@ -49,7 +49,7 @@ export default {
     ...mapActions(["getProducts"]),
   },
   async created() {
-    this.getProducts();
+    // this.getProducts("");
   },
 };
 </script>

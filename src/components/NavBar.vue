@@ -3,7 +3,7 @@
     <b-navbar :transparent="true">
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
-          ONLINESHOP
+          <img src="../assets/logo.png" alt="#" style="max-height: 2.5rem" />
         </b-navbar-item>
       </template>
       <template slot="start">
@@ -11,24 +11,26 @@
           Customer Service
         </b-navbar-item>
         <b-navbar-dropdown label="Products">
-          <b-navbar-item href="#">
-            Laptops
-          </b-navbar-item>
-          <b-navbar-item href="#">
-            TVs
-          </b-navbar-item>
-          <b-navbar-item href="#">
-            Console & Gaming
-          </b-navbar-item>
-          <b-navbar-item href="#">
-            PCs
-          </b-navbar-item>
-          <b-navbar-item href="#">
-            Phones
-          </b-navbar-item>
-          <b-navbar-item href="#">
-            Cameras
-          </b-navbar-item>
+          <div @click="selectNavCategory($event)">
+            <b-navbar-item href="#" id="laptop">
+              Laptops
+            </b-navbar-item>
+            <b-navbar-item href="#" id="tv">
+              TVs
+            </b-navbar-item>
+            <b-navbar-item href="#" id="console">
+              Console & Gaming
+            </b-navbar-item>
+            <b-navbar-item href="#" id="pc">
+              PCs
+            </b-navbar-item>
+            <b-navbar-item href="#" id="phone">
+              Phones
+            </b-navbar-item>
+            <b-navbar-item href="#" id="camera">
+              Cameras
+            </b-navbar-item>
+          </div>
         </b-navbar-dropdown>
       </template>
 
@@ -102,12 +104,12 @@
             </b-dropdown-item>
             <hr class="dropdown-divider" />
             <b-dropdown-item aria-role="menuitem">
-              <router-link to="/profile"
+              <router-link to="/profile" tag="div"
                 ><b-icon icon="user"></b-icon> Profile</router-link
               >
             </b-dropdown-item>
             <b-dropdown-item aria-role="menuitem">
-              <router-link to="/about"
+              <router-link to="/about" tag="div"
                 ><b-icon icon="info-circle"></b-icon> About</router-link
               >
             </b-dropdown-item>
@@ -136,10 +138,14 @@ export default {
     return {
       username: "",
       password: "",
+      searchParams: {
+        title: "",
+        categories: null,
+      },
     };
   },
   methods: {
-    ...mapActions(["logout", "login"]),
+    ...mapActions(["logout", "login", "getProducts"]),
     logoutUser() {
       this.logout();
     },
@@ -157,6 +163,14 @@ export default {
         .catch((err) => {
           console.log(err);
         });
+    },
+    selectNavCategory(event) {
+      if (this.$route.name !== "Products") {
+        this.$router.push("/products");
+      }
+      let targetId = event.target.id;
+      this.searchParams.categories = [targetId];
+      this.getProducts(this.searchParams);
     },
   },
 };
