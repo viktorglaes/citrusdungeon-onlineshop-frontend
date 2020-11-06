@@ -10,27 +10,35 @@
         <b-navbar-item tag="router-link" :to="{ path: '/customer-service' }">
           Customer Service
         </b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{ path: '/about' }">
+          About
+        </b-navbar-item>
         <b-navbar-dropdown label="Products">
-          <div @click="selectNavCategory($event)">
-            <b-navbar-item href="#" id="laptop">
-              Laptops
-            </b-navbar-item>
-            <b-navbar-item href="#" id="tv">
-              TVs
-            </b-navbar-item>
-            <b-navbar-item href="#" id="console">
-              Console & Gaming
-            </b-navbar-item>
-            <b-navbar-item href="#" id="pc">
-              PCs
-            </b-navbar-item>
-            <b-navbar-item href="#" id="phone">
-              Phones
-            </b-navbar-item>
-            <b-navbar-item href="#" id="camera">
-              Cameras
-            </b-navbar-item>
-          </div>
+          <router-link to="/products">
+            <div @click="selectNavCategory($event)">
+              <b-navbar-item href="#" id="products">
+                All Products
+              </b-navbar-item>
+              <b-navbar-item href="#" id="laptop">
+                Laptops
+              </b-navbar-item>
+              <b-navbar-item href="#" id="tv">
+                TVs
+              </b-navbar-item>
+              <b-navbar-item href="#" id="console">
+                Console & Gaming
+              </b-navbar-item>
+              <b-navbar-item href="#" id="pc">
+                PCs
+              </b-navbar-item>
+              <b-navbar-item href="#" id="phone">
+                Phones
+              </b-navbar-item>
+              <b-navbar-item href="#" id="camera">
+                Cameras
+              </b-navbar-item>
+            </div>
+          </router-link>
         </b-navbar-dropdown>
       </template>
 
@@ -100,7 +108,7 @@
             </a>
 
             <b-dropdown-item custom aria-role="menuitem">
-              Logged in as <b>{{ user.username }}</b>
+              Logged in as <b v-if="user">{{ user.username }}</b>
             </b-dropdown-item>
             <hr class="dropdown-divider" />
             <b-dropdown-item aria-role="menuitem">
@@ -108,19 +116,30 @@
                 ><b-icon icon="user"></b-icon> Profile</router-link
               >
             </b-dropdown-item>
-            <b-dropdown-item aria-role="menuitem">
+            <!-- <b-dropdown-item aria-role="menuitem">
               <router-link to="/about" tag="div"
                 ><b-icon icon="info-circle"></b-icon> About</router-link
               >
-            </b-dropdown-item>
+            </b-dropdown-item> -->
             <b-dropdown-item aria-role="menuitem" @click="logoutUser">
               <b-icon icon="sign-out-alt"></b-icon>
               Logout
             </b-dropdown-item>
           </b-dropdown>
         </b-navbar-item>
-        <b-navbar-item style="margin-right: 10px">
-          <b-icon icon="shopping-cart"></b-icon>
+        <b-navbar-item
+          style="margin-right: 15px; padding: 10px;"
+          tag="router-link"
+          to="/cart"
+        >
+          <div>
+            <b-icon icon="shopping-cart"></b-icon>
+            <div id="item-quantity">
+              <div class="dot">
+                {{ cartItems.length }}
+              </div>
+            </div>
+          </div>
         </b-navbar-item>
       </template>
     </b-navbar>
@@ -132,7 +151,7 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   name: "NavBar",
   computed: {
-    ...mapGetters(["isLoggedIn", "user"]),
+    ...mapGetters(["isLoggedIn", "user", "cartItems"]),
   },
   data() {
     return {
@@ -145,7 +164,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["logout", "login", "getProducts"]),
+    ...mapActions(["logout", "login", "getProducts", "getProfile"]),
     logoutUser() {
       this.logout();
     },
@@ -164,14 +183,19 @@ export default {
           console.log(err);
         });
     },
-    selectNavCategory(event) {
-      if (this.$route.name !== "Products") {
-        this.$router.push("/products");
-      }
+    async selectNavCategory(event) {
       let targetId = event.target.id;
+      if (targetId === "products") {
+        targetId = "laptop,tv,console,pc,phone,camera";
+      }
       this.searchParams.categories = [targetId];
       this.getProducts(this.searchParams);
     },
+  },
+  mounted() {
+    if (this.isLoggedIn) {
+      this.getProfile();
+    }
   },
 };
 </script>
@@ -184,6 +208,23 @@ export default {
   a.navbar-item,
   .navbar-link {
     color: #6d6d6d;
+  }
+  #item-quantity {
+    background-color: red;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: -10%;
+    top: 10%;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+
+    .dot {
+      font-size: 14px;
+      margin-top: -1px;
+    }
   }
 }
 </style>

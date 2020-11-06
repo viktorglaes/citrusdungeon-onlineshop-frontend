@@ -12,7 +12,7 @@
           class="column is-one-quarter"
         >
           <div class="card">
-            <div class="card-image">
+            <div class="card-image" style="cursor: pointer; ">
               <figure class="image is-4by3">
                 <img :src="product.image" alt="#" />
               </figure>
@@ -23,7 +23,13 @@
                 <div class="media-content">
                   <p class="title is-4">{{ product.title }}</p>
                   <p class="subtitle is-6">{{ product.model }}</p>
+                  <p class="subtitle is-6" style="font-weight: bold">
+                    ${{ product.price }}
+                  </p>
                 </div>
+              </div>
+              <div>
+                <b-button @click="addToCart(product)">Add to cart</b-button>
               </div>
             </div>
           </div>
@@ -42,11 +48,36 @@ export default {
   components: {
     SearchField,
   },
+  data() {
+    return {
+      items: [],
+    };
+  },
   computed: {
-    ...mapGetters(["allProducts"]),
+    ...mapGetters(["allProducts", "cartItems"]),
   },
   methods: {
-    ...mapActions(["getProducts"]),
+    ...mapActions(["getProducts", "setCartItems"]),
+    addToCart(product) {
+      product.quantity = 1;
+      this.items.push(product);
+      this.setCartItems(this.items);
+      let quantityIcon = document.getElementById("item-quantity");
+
+      quantityIcon.style =
+        "transition: transform 0.6s ease; transform: scale(1.1); background-color: #22C322;";
+      setTimeout(function() {
+        quantityIcon.style =
+          "transition: transform 0.6s ease; transform: scale(0.9); background-color: #22C322;";
+      }, 500);
+    },
+    // makeSmaller(el) {
+    //   el.style =
+    //     "padding: 3px; transition: transform 0.25s ease; transform: scale(0.5);";
+    // },
+  },
+  mounted() {
+    this.items = this.cartItems;
   },
   async created() {
     // this.getProducts("");

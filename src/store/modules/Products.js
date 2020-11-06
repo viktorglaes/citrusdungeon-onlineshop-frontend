@@ -5,10 +5,12 @@ const resource_uri = `http://localhost:5000/api/products`;
 const state = {
   products: [],
   // filteredProducts: [],
+  cart: [],
 };
 const getters = {
   allProducts: (state) => state.products,
   // filteredProducts: (state) => state.filteredProducts,
+  cartItems: (state) => state.cart,
 };
 
 const actions = {
@@ -24,6 +26,9 @@ const actions = {
   //   commit("setFilteredProducts", res.data);
   //   return res;
   // },
+  setCartItems({ commit }, data) {
+    commit("changeCartItems", data);
+  },
 };
 
 const mutations = {
@@ -33,6 +38,9 @@ const mutations = {
   // setFilteredProducts(state, filteredProducts) {
   //   state.filteredProducts = filteredProducts;
   // },
+  changeCartItems(state, cart) {
+    state.cart = cart;
+  },
 };
 
 export default {

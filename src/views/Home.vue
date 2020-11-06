@@ -8,7 +8,7 @@
           class="season-img"
           src="https://cdn.pixabay.com/photo/2013/07/12/18/52/presents-153926_960_720.png"
           alt=""
-          style="width: 1550px;"
+          style="width: 1550px; overflow:hidden; height: 700px;"
         />
         <div class="season-title">
           <p>MERRY CHRISTMAS</p>
@@ -113,6 +113,7 @@ export default {
     .category-card {
       padding: 50px 100px 20px 100px;
       .img-gradient {
+        cursor: pointer;
         height: 400px;
         background-size: cover;
         color: white;

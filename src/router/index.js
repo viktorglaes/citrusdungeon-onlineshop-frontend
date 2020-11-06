@@ -27,14 +27,6 @@ const routes = [
       requiresGuest: true,
     },
   },
-  // {
-  //   path: "/login",
-  //   name: "Login",
-  //   component: () => import("../views/Login.vue"),
-  //   meta: {
-  //     requiresGuest: true,
-  //   },
-  // },
   {
     path: "/profile",
     name: "Profile",
@@ -48,6 +40,21 @@ const routes = [
     name: "Products",
     component: () => import("../views/Products.vue"),
   },
+  {
+    path: "/customer-service",
+    name: "Customer-Service",
+    component: () => import("../views/CustomerService.vue"),
+  },
+  {
+    path: "/cart",
+    name: "Cart",
+    component: () => import("../views/Cart.vue"),
+  },
+  {
+    path: "/product",
+    name: "Product",
+    component: () => import("../views/Product.vue"),
+  },
 ];
 
 const router = new VueRouter({
@@ -59,7 +66,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!store.getters.isLoggedIn) {
-      // Redirect to login page
+      // Redirect to home page
       next("/");
     } else {
       next();

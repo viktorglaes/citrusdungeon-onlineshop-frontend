@@ -26,9 +26,9 @@ export default {
   methods: {
     ...mapActions(["getProfile"]),
   },
-  created() {
-    this.getProfile();
-  },
+  // created() {
+  //   this.getProfile();
+  // },
 };
 </script>
 

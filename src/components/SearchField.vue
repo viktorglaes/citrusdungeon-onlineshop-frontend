@@ -106,23 +106,13 @@
 
     <div class="pages">
       <div class="page-buttons">
-        <router-link to="/products" class="page-button"
-          ><b-button type="is-dark" @click="searchProduct"
-            >All Products</b-button
-          ></router-link
-        >
-        <router-link to="/products" class="page-button"
-          ><b-button type="is-dark">Seasonal</b-button></router-link
-        >
-        <router-link to="/products" class="page-button"
-          ><b-button type="is-dark">Deals</b-button></router-link
-        >
-        <router-link to="/products" class="page-button"
-          ><b-button type="is-dark">Brands</b-button></router-link
-        >
-        <router-link to="/products" class="page-button"
-          ><b-button type="is-dark">Learn</b-button></router-link
-        >
+        <router-link to="/products" class="page-button">
+          <div @click="searchAllProducts">All Products</div>
+        </router-link>
+        <router-link to="/products" class="page-button">Seasonal</router-link>
+        <router-link to="/products" class="page-button">Deals</router-link>
+        <router-link to="/products" class="page-button">Brands</router-link>
+        <router-link to="/products" class="page-button">Learn</router-link>
       </div>
     </div>
   </div>
@@ -174,6 +164,11 @@ export default {
     unselectAllCategories() {
       this.searchParams.categories = [];
     },
+    searchAllProducts() {
+      this.selectAllCategories();
+      this.searchParams.title = "";
+      this.getProducts(this.searchParams);
+    },
   },
 };
 </script>
@@ -181,7 +176,7 @@ export default {
 <style lang="scss">
 .search-field-component {
   .search-bar {
-    padding: 40px 200px 20px 200px;
+    padding: 40px 200px 0px 200px;
 
     input.input {
       //   border-radius: 20px;
@@ -193,14 +188,30 @@ export default {
   }
 
   .pages {
-    margin: 20px 0 20px 20px;
+    margin: 20px 0 0px 20px;
     position: relative;
     text-align: center;
     .page-buttons {
-      // position: absolute;
-      // left: 575px;
       .page-button {
-        margin: 0 10px 0 0;
+        margin: 0 50px 0 0;
+        padding: 10px;
+        display: inline-block;
+        font-size: 20px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+      .page-button:after {
+        display: block;
+        content: "";
+        border-bottom: solid 2px rgb(59, 59, 59);
+        transform: scaleX(0);
+        transition: transform 250ms ease-in-out;
+      }
+      .page-button:hover:after {
+        transform: scaleX(1);
+      }
+      a.page-button {
+        color: rgb(59, 59, 59);
       }
     }
   }

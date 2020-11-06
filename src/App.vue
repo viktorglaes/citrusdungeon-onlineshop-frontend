@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="app">
     <NavBar />
     <!-- <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link> -->
@@ -32,6 +32,7 @@ export default {
 <style lang="scss">
 .app {
   .views {
+    min-height: 650px;
   }
 }
 </style>
