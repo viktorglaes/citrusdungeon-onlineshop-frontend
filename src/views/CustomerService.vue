@@ -86,6 +86,7 @@ export default {};
     text-align: center;
     font-size: 32px;
     box-shadow: 0px 4px 6px -6px #222;
+    font-family: Arial, Helvetica, sans-serif;
   }
 
   .services-cards {

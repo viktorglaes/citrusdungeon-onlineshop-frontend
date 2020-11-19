@@ -112,7 +112,9 @@
         <router-link to="/products" class="page-button">Seasonal</router-link>
         <router-link to="/products" class="page-button">Deals</router-link>
         <router-link to="/products" class="page-button">Brands</router-link>
-        <router-link to="/products" class="page-button">Learn</router-link>
+        <router-link to="/products" class="page-button"
+          >Inspiration</router-link
+        >
       </div>
     </div>
   </div>
@@ -191,6 +193,7 @@ export default {
     margin: 20px 0 0px 20px;
     position: relative;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
     .page-buttons {
       .page-button {
         margin: 0 50px 0 0;

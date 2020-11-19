@@ -12,10 +12,21 @@
           class="column is-one-quarter"
         >
           <div class="card">
-            <div class="card-image" style="cursor: pointer; ">
+            <div
+              class="card-image"
+              style="cursor: pointer;"
+              @click="
+                navigateTo({
+                  name: 'Product',
+                  params: { productId: product._id },
+                })
+              "
+            >
+              <!-- <router-link to="product"> -->
               <figure class="image is-4by3">
                 <img :src="product.image" alt="#" />
               </figure>
+              <!-- </router-link> -->
             </div>
             <div class="card-content">
               <div class="media">
@@ -50,18 +61,42 @@ export default {
   },
   data() {
     return {
-      items: [],
+      // items: [],
+      currentProduct: {},
     };
   },
   computed: {
     ...mapGetters(["allProducts", "cartItems"]),
   },
   methods: {
-    ...mapActions(["getProducts", "setCartItems"]),
+    ...mapActions(["getProducts", "setCartItems", "setProductById"]),
     addToCart(product) {
-      product.quantity = 1;
-      this.items.push(product);
-      this.setCartItems(this.items);
+      this.currentProduct = {
+        quantity: 1,
+        totalPrice: product.price,
+        price: product.price,
+        title: product.title,
+      };
+      this.cartItems.push(this.currentProduct);
+      this.setCartItems(this.cartItems);
+      this.applyCartIcon();
+    },
+    navigateTo(route) {
+      this.getProduct(route.params.productId);
+      this.$router.push(route);
+      // console.log(route.params.productId);
+    },
+    getProduct(productId) {
+      let product = {};
+      // for (let i = 0; i < this.allProducts.length; i++) {
+      //   if (this.allProducts[i]._id == productId) {
+      //     product = this.allProducts[i];
+      //   }
+      // }
+      product = this.allProducts.find((el) => el._id === productId);
+      this.setProductById(product);
+    },
+    applyCartIcon() {
       let quantityIcon = document.getElementById("item-quantity");
 
       quantityIcon.style =
@@ -71,10 +106,6 @@ export default {
           "transition: transform 0.6s ease; transform: scale(0.9); background-color: #22C322;";
       }, 500);
     },
-    // makeSmaller(el) {
-    //   el.style =
-    //     "padding: 3px; transition: transform 0.25s ease; transform: scale(0.5);";
-    // },
   },
   mounted() {
     this.items = this.cartItems;

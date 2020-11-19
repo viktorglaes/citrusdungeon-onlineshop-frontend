@@ -6,11 +6,13 @@ const state = {
   products: [],
   // filteredProducts: [],
   cart: [],
+  product: {},
 };
 const getters = {
   allProducts: (state) => state.products,
   // filteredProducts: (state) => state.filteredProducts,
   cartItems: (state) => state.cart,
+  product: (state) => state.product,
 };
 
 const actions = {
@@ -29,6 +31,9 @@ const actions = {
   setCartItems({ commit }, data) {
     commit("changeCartItems", data);
   },
+  setProductById({ commit }, data) {
+    commit("viewProduct", data);
+  },
 };
 
 const mutations = {
@@ -40,6 +45,9 @@ const mutations = {
   // },
   changeCartItems(state, cart) {
     state.cart = cart;
+  },
+  viewProduct(state, product) {
+    state.product = product;
   },
 };
 

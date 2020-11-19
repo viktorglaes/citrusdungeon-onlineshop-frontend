@@ -43,7 +43,12 @@
       </template>
 
       <template slot="end">
-        <b-navbar-item tag="router-link" to="/register" v-if="!isLoggedIn">
+        <b-navbar-item
+          tag="router-link"
+          to="/register"
+          v-if="!isLoggedIn"
+          style="background-color: rgb(19, 19, 19);"
+        >
           <b-button type="is-primary">Register</b-button>
         </b-navbar-item>
         <b-navbar-item v-if="!isLoggedIn">
@@ -53,7 +58,12 @@
             aria-role="menu"
             trap-focus
           >
-            <a class="navbar-item" slot="trigger" role="button">
+            <a
+              id="login-navbar"
+              class="navbar-item"
+              slot="trigger"
+              role="button"
+            >
               <span>Login</span>
               <!-- <b-icon icon="chevron-down"></b-icon> -->
             </a>
@@ -135,7 +145,7 @@
           <div>
             <b-icon icon="shopping-cart"></b-icon>
             <div id="item-quantity">
-              <div class="dot">
+              <div class="dot" v-if="cartItems.length > 0">
                 {{ cartItems.length }}
               </div>
             </div>
@@ -164,7 +174,13 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["logout", "login", "getProducts", "getProfile"]),
+    ...mapActions([
+      "logout",
+      "login",
+      "getProducts",
+      "getProfile",
+      "getOrders",
+    ]),
     logoutUser() {
       this.logout();
     },
@@ -177,6 +193,7 @@ export default {
         .then((res) => {
           if (res.data.success === true) {
             this.$router.push("/profile");
+            // this.getProfile();
           }
         })
         .catch((err) => {
@@ -210,7 +227,6 @@ export default {
     color: #6d6d6d;
   }
   #item-quantity {
-    background-color: red;
     border-radius: 50%;
     width: 20px;
     height: 20px;

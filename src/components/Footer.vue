@@ -21,6 +21,8 @@ export default {
 
 <style lang="scss">
 .footer-component {
-  margin-top: 50px;
+  // margin-top: 50px;
+  background-color: #fafafa;
+  height: 40vh;
 }
 </style>
