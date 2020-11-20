@@ -1,7 +1,7 @@
 import axios from "axios";
 // import router from "../../router/index";
 
-const resource_uri = `http://localhost:5000/api/orders`;
+const resource_uri = `/api/orders`;
 
 const state = {
   status: "",
@@ -18,10 +18,7 @@ const actions = {
   async orderProducts({ commit }, orderData) {
     try {
       commit("order_request");
-      let res = await axios.post(
-        "http://localhost:5000/api/orders/submit",
-        orderData
-      );
+      let res = await axios.post("/api/orders/submit", orderData);
       if (res.data.success !== undefined) {
         commit("order_success");
       }

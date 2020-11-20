@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const resource_uri = `http://localhost:5000/api/products`;
+const resource_uri = `/api/products`;
 
 const state = {
   products: [],
